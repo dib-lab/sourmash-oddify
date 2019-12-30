@@ -1,7 +1,23 @@
 # sourmash-oddify
 
 Tools and workflows for examining bacterial and archaeal genome contamination
-with k-mers a la [sourmash](http://sourmash.rtfd.io/.
+with k-mers a la [sourmash](http://sourmash.rtfd.io/).
+
+Briefly, sourmash-oddify will:
+
+* classify genomes with GTDB-Tk
+* build sourmash LCA databases based on the resulting taxonomy
+* identify, align, report, and remove taxonomically discordant sub-sequences
+
+The primary value-add of sourmash-oddify is that it uses sourmash to
+quickly identify genomes that share many taxonomically discordant
+k-mers for further investigation; see the Kraken section in [this blog
+post](http://ivory.idyll.org/blog/2017-something-about-kmers.html) for
+more info on how we do that.
+
+sourmash-oddify is in the early stages of development but we are happy
+to support your use of it! Please post questions and problems to [our
+issue tracker](https://github.com/dib-lab/sourmash-oddify/issues).
 
 ## Quickstart
 
