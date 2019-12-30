@@ -3,7 +3,7 @@
 #
 
 # override with --configfiles
-configfile: 'config.yml'
+configfile: 'conf/default.yml'
 
 filter_prefixes = config['filter_prefixes']
 genomes_extension = config['genomes_extension']
@@ -88,7 +88,7 @@ rule make_lca_db:
         require_taxonomy_arg="--require-taxonomy",
         genomes_dir=genomes_dir
     shell:
-        "sourmash lca index {params.require_taxonomy_arg} {input} {output} --traverse-directory {params.genomes_dir} -k {wildcards.ksize} --scaled={params.scaled}"
+        "sourmash lca index {params.require_taxonomy_arg} {input} {output} --traverse-directory {params.genomes_dir} -k {wildcards.ksize} --scaled={params.scaled} -d"
 
 rule make_oddities_txt:
     input:
@@ -110,6 +110,7 @@ rule make_oddities_examine_txt:
         os.path.join(outputs_dir, "{prefix}-oddities-k{ksize,[0-9]+}.examine.txt")
     params:
         outputs_dir=outputs_dir,
-        genomes_dir=genomes_dir
+        genomes_dir=genomes_dir,
+        extension=genomes_extension
     shell:
-        "scripts/find-oddities-examine.py {params.outputs_dir}/{wildcards.prefix}-oddities-k{wildcards.ksize}.csv {params.genomes_dir} --percent-threshold=95 --length-threshold=0 > {output}"
+        "scripts/find-oddities-examine.py {params.outputs_dir}/{wildcards.prefix}-oddities-k{wildcards.ksize}.csv {params.genomes_dir} --percent-threshold=95 --length-threshold=0 --genome-extension={params.extension} > {output}"

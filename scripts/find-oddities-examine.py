@@ -18,13 +18,21 @@ import math
 GENOME_SUFFIXES = ['', '.fna', '.fa', '*_genomic.fna.gz', '*.fna', '*.fa']
 
 
-def find_genome_filename(genomes_dir, ident):
+def find_genome_filename(genomes_dir, ident, extension=None):
     """Find the genome for the given identifier by guessing at extensions.
     Complain bitterly if a single match cannot be found."""
 
-    for suffix in GENOME_SUFFIXES:
+    suffixes = GENOME_SUFFIXES
+    if extension:
+        suffixes = [extension]
+
+    for suffix in suffixes:
         pattern = os.path.join(genomes_dir, ident + suffix)
-        matches = glob.glob(pattern)
+        if os.path.exists(pattern):
+            matches = [pattern]
+        else:
+            matches = glob.glob(pattern)
+
         if len(matches) > 1:
             assert 0, "more than one match to {}; {}".format(ident, matches)
 
@@ -90,6 +98,7 @@ def main():
                    default=95.0)
     p.add_argument('--length-threshold', type=int, default=0)
     p.add_argument('-v', '--verbose', action='store_true')
+    p.add_argument('--genome-extension', default='', type=str)
     args = p.parse_args()
 
     print('loading', args.oddities_csv)
@@ -124,11 +133,11 @@ def main():
 
         # copy & name genome files "clusterx.y.IDENT.fa. gunzip if necessary,
         # since nucmer doesn't handle gzip.
-        fn1 = find_genome_filename(args.genomes_dir, ident1)
+        fn1 = find_genome_filename(args.genomes_dir, ident1, args.genome_extension)
         genome1 = os.path.join(alignments_dir, '{}.{}.fa'.format(cluster_name, ident1))
         copy_and_gunzip_genome(fn1, genome1)
 
-        fn2 = find_genome_filename(args.genomes_dir, ident2)
+        fn2 = find_genome_filename(args.genomes_dir, ident2, args.genome_extension)
         genome2 = os.path.join(alignments_dir, '{}.{}.fa'.format(cluster_name, ident2))
         copy_and_gunzip_genome(fn2, genome2)
 

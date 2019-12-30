@@ -47,6 +47,8 @@ def main():
             n_skipped += 1
             continue
 
+        ident = ident.split('.')[0]
+
         row = [ident] + tax.split(';')
         while len(row[-1]) == 3 and row[-1].endswith('__'):
             row.pop()

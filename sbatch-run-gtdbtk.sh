@@ -1,6 +1,6 @@
 #!/bin/bash -login
 #SBATCH -p bmm
-#SBATCH -J run-gtdbtk
+#SBATCH -J run-sourmash-oddify
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=titus@idyll.org
 #SBATCH -t 3-0:00:00
@@ -11,7 +11,7 @@
 
 . "/home/ctbrown/miniconda3/etc/profile.d/conda.sh"
 
-cd /home/ctbrown/2019-sourmash-gtdb/gtdbtk
+cd /home/ctbrown/sourmash-oddify
 
 conda activate sgc
 
