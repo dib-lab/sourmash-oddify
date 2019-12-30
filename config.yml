@@ -1,0 +1,8 @@
+genomes_dir: genomes.test
+genomes_extension: .fna.gz
+outputs_dir: outputs.test
+filter_prefixes:
+- TOBG
+scaled: 10000
+build_ksizes:
+- 51

@@ -1,0 +1,9 @@
+genomes_dir: genomes.tara
+genomes_extension: .fna
+outputs_dir: outputs.tara
+filter_prefixes:
+- TOBG
+- TARA
+scaled: 10000
+build_ksizes:
+- 51

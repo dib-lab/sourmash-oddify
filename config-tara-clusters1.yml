@@ -1,0 +1,9 @@
+genomes_dir: genomes.tara.clusters1
+genomes_extension: .fa
+outputs_dir: outputs.tara.clusters1
+filter_prefixes:
+- cluster2
+- cluster42
+scaled: 10000
+build_ksizes:
+- 51
