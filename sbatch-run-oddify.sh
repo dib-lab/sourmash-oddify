@@ -13,7 +13,7 @@
 
 cd /home/ctbrown/sourmash-oddify
 
-conda activate sgc
+conda activate sourmash-oddify
 
 snakemake --use-conda -j 8
 

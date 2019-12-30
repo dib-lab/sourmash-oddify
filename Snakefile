@@ -31,7 +31,7 @@ for root, dirs, files in os.walk(genomes_dir, topdown=False):
 
 rule all:
     input:
-        os.path.join(outputs_dir, "gtdbtk/"),
+        ancient(os.path.join(outputs_dir, "gtdbtk/")),
         [ i + '.sig' for i in all_files ],
         expand("{outprefix}/{prefix}-genomes-k{k}.lca.json.gz", k=build_ksizes,
                prefix=filter_prefixes, outprefix=outputs_dir),
@@ -59,7 +59,8 @@ rule gtdbtk_gather_matches:
     .snakemake/conda/1261315d/etc/conda/activate.d/gtdbtk.sh
     """
     input: genomes_dir
-    output: directory(expand("{outprefix}/gtdbtk/", outprefix=outputs_dir))
+    output:
+        directory(expand("{outprefix}/gtdbtk/", outprefix=outputs_dir))
     params:
         outdir = expand("{outprefix}/gtdbtk", outprefix=outputs_dir),
         extension=genomes_extension
@@ -70,7 +71,7 @@ rule gtdbtk_gather_matches:
 
 rule make_lineages_csv:
     input:
-        expand("{outprefix}/gtdbtk/", outprefix=outputs_dir)
+        ancient(expand("{outprefix}/gtdbtk/", outprefix=outputs_dir))
     output:
         expand("{outprefix}/{{filter_prefix}}-lineages.csv", outprefix=outputs_dir)
     params:

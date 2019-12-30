@@ -3,3 +3,4 @@ outputs
 .snakemake
 slurm-*.out
 *~
+*.sig

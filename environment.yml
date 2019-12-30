@@ -1,0 +1,11 @@
+name: sourmash-oddify
+channels:
+    - conda-forge
+    - bioconda
+    - defaults
+dependencies:
+    - snakemake-minimal=5.8.1
+    - screed=1.0.1
+    - sourmash>=2.3.1,<4
+    - mummer
+    - pymummer
