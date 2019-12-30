@@ -1,3 +1,8 @@
+#
+# Primary snakemake workflow for sourmash oddify.
+#
+
+# override with --configfiles
 configfile: 'config.yml'
 
 filter_prefixes = config['filter_prefixes']
@@ -71,7 +76,7 @@ rule make_lineages_csv:
     params:
         outputs_dir=outputs_dir
     shell:
-        "../gtdbtk-to-lineages-csv.py {params.outputs_dir}/gtdbtk/ {output} --filter-prefix={wildcards.filter_prefix:q}"
+        "scripts/gtdbtk-to-lineages-csv.py {params.outputs_dir}/gtdbtk/ {output} --filter-prefix={wildcards.filter_prefix:q}"
 
 rule make_lca_db:
     input:
@@ -94,7 +99,7 @@ rule make_oddities_txt:
     params:
         outputs_dir=outputs_dir
     shell:
-        "../find-oddities.py {input} --lowest-rank=superkingdom --minimum-hashes=10 --prefix={params.outputs_dir}/{wildcards.prefix}-oddities-k{wildcards.ksize} > {output[0]}"
+        "scripts/find-oddities.py {input} --lowest-rank=superkingdom --minimum-hashes=10 --prefix={params.outputs_dir}/{wildcards.prefix}-oddities-k{wildcards.ksize} > {output[0]}"
 
 rule make_oddities_examine_txt:
     input:
@@ -107,4 +112,4 @@ rule make_oddities_examine_txt:
         outputs_dir=outputs_dir,
         genomes_dir=genomes_dir
     shell:
-        "../find-oddities-examine.py {params.outputs_dir}/{wildcards.prefix}-oddities-k{wildcards.ksize}.csv {params.genomes_dir} --percent-threshold=95 --length-threshold=0 > {output}"
+        "scripts/find-oddities-examine.py {params.outputs_dir}/{wildcards.prefix}-oddities-k{wildcards.ksize}.csv {params.genomes_dir} --percent-threshold=95 --length-threshold=0 > {output}"
