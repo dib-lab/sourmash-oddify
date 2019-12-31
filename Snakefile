@@ -56,10 +56,10 @@ rule gtdbtk_gather_matches:
     params:
         outdir = expand("{outprefix}/gtdbtk", outprefix=outputs_dir),
         extension=genomes_extension,
-        gtdbtk_db=config['gtdb_release']
+        gtdbtk_data=config['gtdbtk_data']
     conda: "env-gtdbtk.yml"
     shell:'''
-    GTDBTK_DATA_PATH={params.gtdbtk_db:q} gtdbtk classify_wf --genome_dir {input} --out_dir {params.outdir} --cpus 8 --extension {params.extension}
+    GTDBTK_DATA_PATH={params.gtdbtk_data:q} gtdbtk classify_wf --genome_dir {input} --out_dir {params.outdir} --cpus 8 --extension {params.extension}
     '''
 
 rule make_lineages_csv:
