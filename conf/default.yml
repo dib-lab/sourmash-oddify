@@ -1,8 +1,19 @@
+# GTDB-Tk database dir, path relative to sourmash-oddify top-level directory.
+# The specified directory should have 'fastani/' and 'taxonomy/' subdirs.
+gtdb_release: ../gtdbtk/release89
+
+# input genomes & their extension
 genomes_dir: genomes.test
 genomes_extension: .fna.gz
+
+# outputs.
 outputs_dir: outputs.test
+
+# identifier prefixes. Must be non-empty.
 filter_prefixes:
 - TOBG
+
+# 'sourmash lca index' parameters.
 scaled: 10000
 build_ksizes:
 - 51

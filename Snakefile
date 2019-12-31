@@ -19,7 +19,6 @@ require_taxonomy_bool=0
 ###
 
 import os
-import random
 
 all_files = []
 for root, dirs, files in os.walk(genomes_dir, topdown=False):
@@ -51,22 +50,16 @@ rule sigs:
         "sourmash compute -k 21,31,51 --scaled=1000 {input} -o {output} --merge=$(basename {input} {params.extension})"
 
 rule gtdbtk_gather_matches:
-    """
-    this rule require the gtdbtk databases. The tool finds the database by 
-    using a path specified in a file in the environment. I predownloaded the 
-    databases and placed them in the required location.
-    The path is in this file:
-    .snakemake/conda/1261315d/etc/conda/activate.d/gtdbtk.sh
-    """
     input: genomes_dir
     output:
         directory(expand("{outprefix}/gtdbtk/", outprefix=outputs_dir))
     params:
         outdir = expand("{outprefix}/gtdbtk", outprefix=outputs_dir),
-        extension=genomes_extension
+        extension=genomes_extension,
+        gtdbtk_db=config['gtdb_release']
     conda: "env-gtdbtk.yml"
     shell:'''
-    gtdbtk classify_wf --genome_dir {input} --out_dir {params.outdir} --cpus 8 --extension {params.extension}
+    GTDBTK_DATA_PATH={params.gtdbtk_db:q} gtdbtk classify_wf --genome_dir {input} --out_dir {params.outdir} --cpus 8 --extension {params.extension}
     '''
 
 rule make_lineages_csv:
