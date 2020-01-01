@@ -56,7 +56,7 @@ rule gtdbtk_gather_matches:
     params:
         outdir = expand("{outprefix}/gtdbtk", outprefix=outputs_dir),
         extension=genomes_extension,
-        gtdbtk_data=config['gtdbtk_data']
+        gtdbtk_data=os.path.abspath(config['gtdbtk_data'])
     conda: "env-gtdbtk.yml"
     shell:'''
     GTDBTK_DATA_PATH={params.gtdbtk_data:q} gtdbtk classify_wf --genome_dir {input} --out_dir {params.outdir} --cpus 8 --extension {params.extension}
