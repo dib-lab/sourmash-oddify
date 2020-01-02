@@ -1,7 +1,7 @@
 # sourmash-oddify
 
 sourmash-oddify contains tools and workflows for examining bacterial
-and archaeal genome contamination with k-mers using sourmash
+and archaeal genome contamination with k-mers using
 [sourmash](http://sourmash.rtfd.io/).
 
 Briefly, sourmash-oddify will:
