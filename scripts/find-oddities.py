@@ -111,12 +111,11 @@ def make_lca_counts(dblist, lowest_rank='phylum', min_num=0, min_hashes=5,
         # now, identify all members of these lineages by their index:
         all_idxs = []
         for lineage_n, lineage in enumerate(lineages):
-            lids = dblist[0].lineage_to_lids[lineage]
-            for lid in lids:
-                idxs = dblist[0].lid_to_idx[lid]
-                all_idxs.extend(idxs)
-                for idx in idxs:
-                    ident = dblist[0].idx_to_ident[idx]
+            lid = dblist[0].lineage_to_lid[lineage]
+            idxs = dblist[0].lid_to_idx[lid]
+            all_idxs.extend(idxs)
+            for idx in idxs:
+                ident = dblist[0].idx_to_ident[idx]
 
         # run through and look at all pairs of genomes in these lineages;
         # filter so that we're comparing across lineages with the right
@@ -144,8 +143,8 @@ def make_lca_counts(dblist, lowest_rank='phylum', min_num=0, min_hashes=5,
                 if lca != this_lca:
                     continue
 
-                mh1 = dblist[0]._signatures[idx1]
-                mh2 = dblist[0]._signatures[idx2]
+                mh1 = dblist[0]._signatures[idx1].minhash
+                mh2 = dblist[0]._signatures[idx2].minhash
 
                 mins1 = set(mh1.get_mins())
                 mins2 = set(mh2.get_mins())
